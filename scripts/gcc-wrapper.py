@@ -72,19 +72,19 @@ def run_gcc():
     compiler = sys.argv[0]
 
     try:
-        proc = subprocess.Popen(args, stderr=subprocess.PIPE)
+        proc = subprocess.Popen(args, stderr=subprocess.PIPE, universal_newlines=True)
         for line in proc.stderr:
-            print line,
+            print(line, end=' ')
             interpret_warning(line)
 
         result = proc.wait()
     except OSError as e:
         result = e.errno
         if result == errno.ENOENT:
-            print args[0] + ':',e.strerror
-            print 'Is your PATH set correctly?'
+            print(args[0] + ':',e.strerror)
+            print('Is your PATH set correctly?')
         else:
-            print ' '.join(args), str(e)
+            print(' '.join(args), str(e))
 
     return result
 
