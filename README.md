@@ -1,5 +1,3 @@
-[hwjdn-kernel-README.md](https://github.com/user-attachments/files/33302371/hwjdn-kernel-README.md)
-
 # Linux kernel for the Huawei MediaPad T2 8.0 Pro (JDN-L01, JDN-W09, JDN-AL00)
 
 Kernel 3.10.108 for the Huawei MediaPad T2 8.0 Pro / Honor Pad 2
