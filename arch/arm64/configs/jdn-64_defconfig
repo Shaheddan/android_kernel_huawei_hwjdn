@@ -35,7 +35,7 @@ CONFIG_ARCH_MMAP_RND_COMPAT_BITS=16
 CONFIG_PARTITION_ADVANCED=y
 # CONFIG_IOSCHED_TEST is not set
 CONFIG_IOSCHED_BFQ=y
-CONFIG_CGROUP_BFQIO=y
+# CONFIG_CGROUP_BFQIO is not set
 # jdn: cfq default, as Huawei's JDN kernel - the only scheduler that honours Android's background I/O priorities
 CONFIG_DEFAULT_CFQ=y
 CONFIG_ARCH_MSM=y
@@ -700,3 +700,23 @@ CONFIG_QMI_ENCDEC=y
 
 # jdn: options from Huawei's msm8939_user_defconfig
 CONFIG_IP_MULTICAST=y
+# eBPF, cgroup and PSI backport (kiwi lineage-20-ebpf, from LeEco s2): what
+# Android 13's bpfloader, netd, TrafficController and lmkd expect from the
+# kernel. Same set as kiwi-64_defconfig.
+CONFIG_BPF=y
+CONFIG_BPF_SYSCALL=y
+CONFIG_CGROUP_BPF=y
+CONFIG_CGROUP_PIDS=y
+CONFIG_KERNFS=y
+CONFIG_SOCK_CGROUP_DATA=y
+CONFIG_NETFILTER_XT_MATCH_BPF=y
+CONFIG_NET_CLS_BPF=y
+CONFIG_NET_ACT_BPF=y
+CONFIG_PSI=y
+# Report a 4.9 kernel to system_server, zygote, init and the BPF loaders
+# only (everything else, incl. /proc/version, sees the real 3.10): Android's
+# BPF loader then loads the program variants built for <= 4.9, whose
+# helpers this backport provides. Same values as kiwi and LeEco s2.
+CONFIG_ANDROID_TREBLE_SPOOF_KERNEL_VERSION=y
+CONFIG_ANDROID_TREBLE_BYPASS_KERNEL_VERSION_CHECKS=y
+CONFIG_ANDROID_TREBLE_SPOOF_KERNEL_VERSION_PREFIX="4.9.337"
