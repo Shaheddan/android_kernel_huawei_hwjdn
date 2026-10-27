@@ -2,7 +2,8 @@
 
 Kernel 3.10.108 for the Huawei MediaPad T2 8.0 Pro / Honor Pad 2
 (codename `jordan`, MSM8939v2). Builds **TWRP 3.7.0** and
-**LineageOS 19.1 (Android 12.1)** and, on `lineage-20`, **LineageOS 20 (Android 13)**.
+**LineageOS 19.1 (Android 12.1)**, on `lineage-20` **LineageOS 20 (Android 13)** and, on
+`lineage-21`, **LineageOS 21 (Android 14)**.
 
 When this port started, no kernel source for this device was available, so
 the tree is based on the **kiwi** (Honor 5X) kernel, which shares the SoC:
@@ -28,6 +29,7 @@ the W09 and AL00; GitHub redirects the old URL.
 
 | Branch | Contents |
 | --- | --- |
+| `lineage-21` | LineageOS 21 (Android 14): `lineage-20` plus kiwi's Android 14 kernel fixes (Phase 5). In bring-up. |
 | `lineage-20` | LineageOS 20 (Android 13): kiwi's `lineage-20-ebpf` kernel with this tablet's commits from Phases 1-3 on top (Phase 4). Boots and runs LineageOS 20 on the JDN-L01. |
 | `jdn-pad-power` | `lineage-19.1` plus Phase 3 (Huawei JDN source port, JDN-W09 and JDN-AL00 DTBs). Runs LineageOS 19.1 and TWRP on the JDN-L01; W09 and AL00 untested. |
 | `lineage-19.1` | The LineageOS 19.1 release: Phases 1 and 2. |
@@ -100,6 +102,22 @@ replayed on top, instead of redoing the backport:
   `NET_CLS_BPF`, `NET_ACT_BPF`, `PSI` and the version report; `CGROUP_BFQIO`
   goes off (it still uses the pre-3.14 cgroup API).
 
+## Phase 5 — Android 14 (`lineage-21`)
+
+`lineage-20` plus the kernel fixes the Honor 5X (kiwi) port needed for
+LineageOS 21 on the same kernel (kiwi kernel `lineage-21`), cherry-picked
+unchanged:
+
+| Change | Why |
+| --- | --- |
+| **`renameat2`** (flags 0, then `RENAME_NOREPLACE`) | Android 14's bionic implements `rename()` with `renameat2`, and the BPF loader uses `RENAME_NOREPLACE`; 3.10 has neither. |
+| **Per-file SELinux labels on bpffs** (`SE_SBGENFS`) | Android 14 labels BPF maps and programs per file; without it ClatCoordinator could not open them and aborted. |
+| **FunctionFS AIO cancel per the 3.10 contract** | The cancel path leaked endpoint files, so `adb root` hung on userdebug builds. |
+| **`scripts/gcc-wrapper.py` keeps diagnostics on stderr** (kiwi's wrapper as a whole) | The kernel Makefile captures the compiler's stdout in `$(shell ...)`; a warning from a front-end such as ccache landed in the link line and broke LineageOS 21's kernel header step. Runs on Python 2 and 3. |
+
+kiwi's other `lineage-21` kernel commit enables the fuel gauge on its
+KIW-TL00H board and does not apply here.
+
 ## Building
 
     export ARCH=arm64 SUBARCH=arm64
@@ -123,6 +141,7 @@ https://github.com/Shaheddan/android_device_huawei_hwjdn
 - `jdn-pad-power` — LineageOS 19.1 with the Phase 3 work, W09/AL00 support
   and the crave.io build script
 - `lineage-20` — LineageOS 20, with the crave.io build script
+- `lineage-21` — LineageOS 21
 
 ## License
 
