@@ -29,7 +29,7 @@ the W09 and AL00; GitHub redirects the old URL.
 
 | Branch | Contents |
 | --- | --- |
-| `lineage-21` | LineageOS 21 (Android 14): `lineage-20` plus kiwi's Android 14 kernel fixes (Phase 5). In bring-up. |
+| `lineage-21` | LineageOS 21 (Android 14): `lineage-20` plus kiwi's Android 14 kernel fixes (Phase 5). Runs LineageOS 21 on the JDN-L01, fully SELinux enforcing. |
 | `lineage-20` | LineageOS 20 (Android 13): kiwi's `lineage-20-ebpf` kernel with this tablet's commits from Phases 1-3 on top (Phase 4). Boots and runs LineageOS 20 on the JDN-L01. |
 | `jdn-pad-power` | `lineage-19.1` plus Phase 3 (Huawei JDN source port, JDN-W09 and JDN-AL00 DTBs). Runs LineageOS 19.1 and TWRP on the JDN-L01; W09 and AL00 untested. |
 | `lineage-19.1` | The LineageOS 19.1 release: Phases 1 and 2. |
