@@ -5069,6 +5069,10 @@
 					qcom,force-bms-active-on-charger;
 					qcom,battery-data = <0xd9>;
 					qcom,use-ext-charger;
+					/* jdn: count charge cycles (every SOC rise added up, one cycle per 100 %), kept in
+					 * the PMIC BMS storage registers so the count survives reboots and reflashes. The
+					 * driver only counts; it does not use the count for the SOC calculation. */
+					qcom,batt-aging-comp;
 
 					qcom,batt-pres-status@1208 {
 						reg = <0x1208 0x1>;
